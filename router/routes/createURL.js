@@ -1,3 +1,4 @@
+require('dotenv').config();
 const URL = require('../../Model/URL.js');
 const createID = require('../../lib/createID.js');
 
@@ -13,7 +14,7 @@ async function createURL(req, res) {
 
     try {
         await URL.create({ URLID: URLID, redirectURL: redirectURL });
-        res.send({error: false, message: `http://localhost:3000/api/${URLID}`});
+        res.send({error: false, message: `${process.env.LOCAL_URL}${URLID}`});
     }
     catch(error) {
         res.send({error: true, message: "db error"});
