@@ -1,6 +1,7 @@
 require('dotenv').config();
 const URL = require('../../Model/URL.js');
 const createID = require('../../lib/createID.js');
+const urlChecker = require('../../lib/urlChecker.js');
 
 async function createURL(req, res) {
     const data = req.body;
@@ -8,6 +9,14 @@ async function createURL(req, res) {
 
     if(!redirectURL) {
         res.send({error: true, message: "did not receive redirectURL"});
+        return;
+    }
+
+    const urlValid = await urlChecker(redirectURL);
+
+    if(!urlValid) {
+        res.send({error: true, message: "invalid url"});
+        return;
     }
 
     let URLID = createID(8);
@@ -22,4 +31,4 @@ async function createURL(req, res) {
     }
 }
 
-module.exports = createURL
+module.exports = createURL;

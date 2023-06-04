@@ -75,3 +75,17 @@
   justify-content: center;
   align-items: center;
 }
+
+.error {
+  background-color: #eb4034;
+  color: #fafafa;
+  padding: 20px;
+  max-width: 500px;
+  border-radius: 10px;
+}
+
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

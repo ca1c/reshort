@@ -8,6 +8,8 @@ export default class Main extends Component {
             unshortenedLink: "",
             linkVisible: false,
             link: "",
+            error: false,
+            errorMessage: "",
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,14 +29,28 @@ export default class Main extends Component {
         })
         .then((response) => {
             if(response.data.error) {
-                console.log(response.data.message);
+                this.setState({
+                    errorMessage: response.data.message,
+                    error: true,
+                    linkVisible: false,
+                });
+                
                 return;
             }
 
             this.setState({
                 link: response.data.message,
-                linkVisible: true
+                linkVisible: true,
+                error: false,
             });
+        })
+        .catch((error) => {
+            this.setState({
+                errorMessage: "request error",
+                error: true,
+                linkVisible: false,
+            });
+            console.log(error);
         })
     }
 
@@ -67,6 +83,24 @@ export default class Main extends Component {
                                 <div id="url">
                                     <p>Your shortened url:</p>
                                     <p>{this.state.link}</p>
+                                </div>
+                            </div>
+
+                            :
+
+                            null
+
+                            }
+
+                            {
+                            
+                            this.state.error
+
+                            ?
+
+                            <div className="errorContainer">
+                                <div className="error">
+                                    <p>{this.state.errorMessage}</p>
                                 </div>
                             </div>
 
